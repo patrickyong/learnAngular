@@ -14,4 +14,10 @@ export class AppComponent {
   ];
 
   title = 'Main Navigation';
+
+  loginCount = 0;
+
+  login() {
+    this.loginCount++;
+  }
 }

@@ -1,3 +1,5 @@
 <h1>Test</h1>
-<app-menu-list [title]="title" [list]="menulist"></app-menu-list>
+<app-menu-list [title]="title" [list]="menulist" (loginClicked)="login()"></app-menu-list>
 <app-hello-world></app-hello-world>
+
+<p>{{ loginCount }}</p>

@@ -1,4 +1,4 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 
 @Component({
   selector: 'app-menu-list',
@@ -12,6 +12,14 @@ export class MenuListComponent implements OnInit {
 
   @Input()
   list: any[];
+
+  @Output()
+  loginClicked: EventEmitter<any> = new EventEmitter();
+
+  clickLogin() {
+    // fire login event
+    this.loginClicked.emit();
+  }
 
   constructor() { }
 
