@@ -6,11 +6,11 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-#Notes taken in the class
+# Notes taken in the class
 
-Intro to Angular 4.0
+## Intro to Angular 4.0
 
-Intro
+## Intro
 Have to intro what is ES6 and Typescript
 Compare ES5, ES6 and Typescript
 
@@ -55,7 +55,7 @@ Angular application atonomy
 6. Directive
 
 
-Component
+## Component
 What is a Component?
 Its like User Control in ASP.NET
 Each can function individually
@@ -200,7 +200,7 @@ Most common event is ngOnInit
 
 You can add this to app.component by implemented OnInit interface. Then move all initialisation code from constructor to ngOnInit. Useful if you want to use API call to initialise any values. 
 
-##Service
+## Service
 Lets create a todo service
 ng g s todo
 
@@ -222,7 +222,7 @@ export class TodoService {
 
 
 
-#Further reading
+# Further reading
 
 ## Running unit tests
 
