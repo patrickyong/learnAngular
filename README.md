@@ -220,6 +220,31 @@ this.todoList = this.todoSvc.getList();
 export class TodoService {
 
 ### Getting data from Firebase
+run the following:
+npm install firebase angularfire2 --save
+
+then go to firebase console, click on add firebase web api to get the apikey
+
+add the apikey to module [following key is not usable]
+const config = {
+    apiKey: 'yc3984cup23e24eoOWEuoqw8ueOo2u23o2u',
+    authDomain: 'learnangular-21323f.firebaseapp.com',
+    databaseURL: 'https://learnangular-21323f.firebaseio.com',
+    projectId: 'learnangular-21323f',
+    storageBucket: 'learnangular-21323f.appspot.com',
+    messagingSenderId: '151742323787'
+  };
+
+You have to whitelist your domain to use the above apikey
+https://support.google.com/firebase/answer/6400741
+
+After that modify the Import statement
+imports: [
+    BrowserModule,
+    FormsModule,
+    AngularFireModule.initializeApp(config)
+  ],
+
 
 
 # Further reading
