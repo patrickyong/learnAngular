@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { FormsModule } from '@angular/forms';
-
+import { ClarityModule } from 'clarity-angular';
 import { AppComponent } from './app.component';
 import { HelloWorldComponent } from './hello-world/hello-world.component';
 import { MenuListComponent } from './menu-list/menu-list.component';
@@ -11,6 +11,9 @@ import { TodoService } from './service/todo.service';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
+
+import { UiModule } from './ui/ui.module';
+
 
 const config = {
     apiKey: 'AIzaSyBm1p-ZMzY7t9iaEEXigsszfRl2CxloJpE',
@@ -31,7 +34,9 @@ const config = {
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(config),
-    AngularFireDatabaseModule
+    AngularFireDatabaseModule,
+    ClarityModule.forRoot(),
+    UiModule
   ],
   providers: [
     TodoService

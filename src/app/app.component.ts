@@ -9,7 +9,7 @@ import { TodoService } from './service/todo.service';
 })
 export class AppComponent implements OnInit {
 
-  title = 'Main Navigation';
+  title = 'Todos';
 
   loginCount = 0;
 

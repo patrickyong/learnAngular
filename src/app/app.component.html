@@ -1,20 +1,22 @@
-<h1>Todos</h1>
+<app-layout>
+  <h1>{{title}}</h1>
+  <input type='text' [(ngModel)]="currentTodo">
+    <button (click)="addItem(currentTodo)">Add</button>
+    <ul>
+        <li *ngFor="let item of todoList">
+            <span [class.strike]="item.isCompleted">{{ item.desc }}</span>
+            <button *ngIf="!item.isCompleted" (click)="completeTask(item)">Complete</button>
+            <button *ngIf="item.isCompleted" (click)="deleteTask(item)">Delete</button>
+            
+        </li>
+    </ul>
+    <app-menu-list [title]="title" [list]="menulist" (loginClicked)="login($event)"></app-menu-list>
+    <app-hello-world></app-hello-world>
 
+    <p>{{ loginCount }}</p>
+</app-layout>
 <!-- show todo list -->
 
-<input type='text' [(ngModel)]="currentTodo">
-<button (click)="addItem(currentTodo)">Add</button>
-<ul>
-    <li *ngFor="let item of todoList">
-        <span [class.strike]="item.isCompleted">{{ item.desc }}</span>
-        <button *ngIf="!item.isCompleted" (click)="completeTask(item)">Complete</button>
-        <button *ngIf="item.isCompleted" (click)="deleteTask(item)">Delete</button>
-        
-    </li>
-</ul>
 
-<!--<app-menu-list [title]="title" [list]="menulist" (loginClicked)="login($event)"></app-menu-list>
-<app-hello-world></app-hello-world>
-
-<p>{{ loginCount }}</p>-->
+<!---->
 
