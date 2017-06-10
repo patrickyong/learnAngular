@@ -23,6 +23,7 @@ export class AppComponent {
       alert(param);
   }
 
+  // this is a property
   get isMale() {
     return this.customer.gender === 'male';
   }
