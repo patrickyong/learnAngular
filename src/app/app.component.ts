@@ -8,11 +8,9 @@ import { Component } from '@angular/core';
 export class AppComponent {
   label: string;
   customer: ICustomer;
-  
 
   constructor() {
-    this.label = 'my name';
-    
+    this.label = 'I am';
     this.customer = {
       name: 'Chris',
       age: 12,
@@ -21,23 +19,18 @@ export class AppComponent {
 
   }
 
-  alert(param: string)
-  {
+  alert(param: string) {
       alert(param);
   }
 
-  isMale()
-  {
-    return this.customer.gender == "male";
+  get isMale() {
+    return this.customer.gender === 'male';
   }
 
-  male()
-  {
-    this.customer.gender = "male";
+  changeGender() {
+    this.customer.gender = this.customer.gender === 'male' ? 'female' : 'male';
   }
 
-  female()
-  {this.customer.gender = "female";}
 }
 
 interface ICustomer {

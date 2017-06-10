@@ -1,7 +1,7 @@
-test
+<h1>Test</h1>
 
 <p [class]="customer?.gender">
-  {{ label }} is {{ customer?.name }}, {{ customer?.gender }} and I am {{ customer?.age }}
+  {{ label }} {{ customer?.name }}, {{ customer?.gender }} and I am {{ customer?.age }}
 </p>
 
 <input type="text" value="{{ customer?.name }}"/>
@@ -14,11 +14,10 @@ test
   Alert
 </button>
 
-<button (click)="male()" ng-hide="isMale()">
+<button (click)="changeGender()" [hidden]="isMale">
   Male
 </button>
 
-
-<button (click)="female()"  ng-hide="!isMale()">
+<button (click)="changeGender()"  [hidden]="!isMale">
   Female
 </button>
