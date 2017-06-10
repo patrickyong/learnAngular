@@ -1,5 +1,5 @@
 # Learn Angular 4 with Firebase
-
+Cmd+Shift+V
 ### After you download the source code
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -69,24 +69,30 @@ Always got view and component (class)
 2. Another one way is use [value] 
 <input type="text" [value]="customer?.name"/>
 3. 2 way binding 
+```html
 	<input type="text" [(ngModel)]="customer.name" />
+```
 to use this remember go to module file and add the following
-	
+```javascript
 	import { FormsModule } from '@angular/forms';
 
 	imports: [
     		BrowserModule,
     		FormsModule
   	],
-
-4. Talk about binding to event <button (click)="alert(customer.name)”> You will need put blacker . This can bind to all html attribute
+```javascript
+4. Talk about binding to event
+```
+<button (click)="alert(customer.name)”>
+```
+You will need put blacker . This can bind to all html attribute
 
 Now is to create firebase
 Talk about firebase.google.com
 
 Firebase login
 Firebase init hosting
-
+```json
 {
   "hosting": {
     "public": "dist",
@@ -98,7 +104,7 @@ Firebase init hosting
     ]
   }
 }
-
+```
 Finally firebase deploy
 
 Talk about "deploy": "ng build -prod && firebase deploy" in package.json
@@ -115,20 +121,20 @@ But remember to update the selector in tslint.json
 
 Then create a menu-list component
 At the import add Input, then create a property called list:any[]
-
+```javascript
 @Input()
   list: any[];
-
+```
 This allow other component to pass in variable
 
 In the HTML add the following
-
+```html
 <ul>
   <li *ngFor="let item of list">
     <a [href]="item.url">{{ item.name }}</a>
   </li>
 </ul>
-
+```
 To pass a list to menuList, at app.component.html add the following
 <app-menu-list [list]="menulist"></app-menu-list>
 
@@ -314,6 +320,10 @@ Delete function is non trival, similar to update
 
 # Further reading
 
+
+learn about subscribe using pipe such as 'let item of (todo$ | async)'
+
+
 ### spec file is testing class
 
 ## Running unit tests
@@ -324,6 +334,10 @@ Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.
 
 Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
 Before running the tests make sure you are serving the app via `ng serve`.
+
+## UX UI
+https://stackoverflow.com/questions/39395359/angular-2-ui-components-which-library
+
 
 ## Further help
 
