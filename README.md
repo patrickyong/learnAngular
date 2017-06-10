@@ -80,9 +80,9 @@ to use this remember go to module file and add the following
     		BrowserModule,
     		FormsModule
   	],
-```javascript
-4. Talk about binding to event
 ```
+4. Talk about binding to event
+```html
 <button (click)="alert(customer.name)”>
 ```
 You will need put blacker . This can bind to all html attribute
@@ -92,7 +92,7 @@ Talk about firebase.google.com
 
 Firebase login
 Firebase init hosting
-```json
+```javascript
 {
   "hosting": {
     "public": "dist",
@@ -141,39 +141,46 @@ To pass a list to menuList, at app.component.html add the following
 Now import Output, EventEmitter to menu list component
 
 Add this:
+```typescript
 @Output()
 loginClicked: EventEmitter<any> = new EventEmitter();
-
+```
 Proceed to create a button on menu list
+```html
 <a href="#" (click)="clickLogin()">Login</a>
-
+```
 And the following method to trigger the event
+```typescript
  clickLogin() {
     // fire login event
     this.loginClicked.emit();
   }
-
+```
 
 To call this in app.component.html
+```html
 <app-menu-list [title]="title" [list]="menulist" (loginClicked)="login()"></app-menu-list>
-
+```
 Then write the login() function
 
 The emit function can pass out value, so change it to 
+```typescript
   clickLogin() {
     // fire login event
     this.loginClicked.emit(2);
   }
-
+```
 
 To accept the value password out, change the trigger method to 
+```typescript
 (loginClicked)="login($event)"
-
+```
 Also change the accepting method
+```typescript
   login(num: number) {
     this.loginCount = this.loginCount + num;
   }
-
+```
 
 Check out Augury, Chrome extension to debug angular app
 Component debugging is a snap!!
@@ -181,18 +188,19 @@ Component debugging is a snap!!
 In angular there is CSS scoping to component, same CSS classname will not interfere with each other components
 
 For shared CSS class, you can set
+```typescript
 Import view encapsulation: 
 import { Component, OnInit, Input, Output, EventEmitter, ViewEncapsulation } from '@angular/core';
-
+```
 Then update the component
-
+```typescript
 @Component({
   selector: 'app-menu-list',
   templateUrl: './menu-list.component.html',
   styleUrls: ['./menu-list.component.css'],
   encapsulation: ViewEncapsulation.None
 })
-
+```
 
 Each component has lifecycle
 ￼
@@ -204,30 +212,37 @@ You can add this to app.component by implemented OnInit interface. Then move all
 
 ## Service
 Lets create a todo service
+```
 ng g s todo
-
+```
 Then in app.module.ts, add the service into provider section
 
 After that inject todoService into constructor of the class thats going to use it
+```typescript
 constructor(public todoSvc: TodoService) {
 
   }
+```
 [The public attribute is to make the service available outside of the constructor]
 
 Then you use the service in the ngOnInit
+```typescript
 this.todoList = this.todoSvc.getList();
-
+```
 
 ***what you export, you can import elsewhere, such as 
+```typescript
 export class TodoService {
-
+```
 ### Getting data from Firebase
-run the following:
+Run the following:
+```bash
 npm install firebase angularfire2 --save
+```
+Then go to firebase console, click on add firebase web api to get the apikey
 
-then go to firebase console, click on add firebase web api to get the apikey
-
-add the apikey to module [following key is not usable]
+Add the apikey to module [following key is not usable]
+```typescript
 const config = {
     apiKey: 'yc3984cup23e24eoOWEuoqw8ueOo2u23o2u',
     authDomain: 'learnangular-21323f.firebaseapp.com',
@@ -236,25 +251,28 @@ const config = {
     storageBucket: 'learnangular-21323f.appspot.com',
     messagingSenderId: '151742323787'
   };
-
+```
 You have to whitelist your domain to use the above apikey
 https://support.google.com/firebase/answer/6400741
 
 After that modify the Import statement
+``` typescript
 imports: [
     BrowserModule,
     FormsModule,
     AngularFireModule.initializeApp(config)
   ],
-
+```
 then you have to inject the database service in your service class
+``` typescript
 import { AngularFireDatabase } from 'angularfire2/database';
-
+```
 and on the constructor
+``` typescript
 constructor(private afDb: AngularFireDatabase) { }
-
+```
 this is how to use the database
-
+``` typescript
   getList()  {
     return this.afDb.list('/todos');
   }
@@ -262,10 +280,11 @@ this is how to use the database
   addItem(item: TodoItem) {
     this.afDb.list('/todos').push(item)
   }
+```
+Don't forget to change the access rule in your Firebase database
 
-remember to change the rule in your firebase database
-
-To use Firebase database
+To use Firebase database, add the following
+``` typescript
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 then at import the module
 imports: [
@@ -274,20 +293,25 @@ imports: [
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule
   ],
+```
+The following will not work because its a subscription to the real time DB
 
-this.todoList = this.todoSvc.getList(); will not work because its a subscription to the real time DB
-
-please change it to 
-
+```
+this.todoList = this.todoSvc.getList(); 
+```
+Please change it to 
+``` typescript
 this.todoSvc.getList().subscribe(list => {
       this.todoList = list;
     })
-
+```
 for the add function you can make it a subscription also
 first make sure you return something from firebase
 return this.afDb.list('/todos').push(item)
 
 then on the app.component.ts
+
+```typescript
 this.todoSvc.addItem({desc: param, isCompleted: false})
     .then(() => {
       this.currentTodo = '';
@@ -295,15 +319,18 @@ this.todoSvc.addItem({desc: param, isCompleted: false})
     .catch(err => {
       console.log(err);
     });
-
+```
 Because each item from firebase DB as a $key value which is identify the object, we will use type of any for update
 
 At the service class
+```javascript
 updateItem(item: any) {
     return this.afDb.list('/todos').update(item.$key, item);
   }
-
+```
 On the component
+
+``` Javascript
 completeTask(item: any) {
     item.isCompleted = true;
     this.todoSvc.updateItem(item)
@@ -312,11 +339,25 @@ completeTask(item: any) {
       })
       .catch(err => console.log(err));
   }
-
+```
 Finally on the HTML do this 
+``` html
 <button *ngIf="!item.isCompleted" (click)="completeTask(item)">Complete</button>
-
+```
 Delete function is non trival, similar to update
+
+## UI/ UX components
+No web app is complete without proper UI even for enterprise based system. Fortunately there are tonnes of UI components created for Angular. To my suprise I found out that even VMWare and Teradata created UI frameworks for Angular so I tried out VMWare's clarity here. You can follow this blog post on Medium for detailed step-by-step
+
+https://medium.com/@beeman/tutorial-project-clarity-and-angular-cli-50d845a24d5b
+
+Remember since webcomponents is out of beta, you dont have to specify the version and you can use the following NPM command instead.
+```bash
+$ npm install --save-dev clarity-icons clarity-ui clarity-angular  @webcomponents/custom-elements mutationobserver-shim 
+```
+
+In case you don't find any liking for Clarity, there are tones of UI component as highlighted here in Stackoverflow
+https://stackoverflow.com/questions/39395359/angular-2-ui-components-which-library
 
 # Further reading
 
@@ -336,7 +377,7 @@ Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protrac
 Before running the tests make sure you are serving the app via `ng serve`.
 
 ## UX UI
-https://stackoverflow.com/questions/39395359/angular-2-ui-components-which-library
+
 
 
 ## Further help
