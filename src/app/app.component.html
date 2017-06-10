@@ -1,23 +1,2 @@
 <h1>Test</h1>
-
-<p [class]="customer?.gender">
-  {{ label }} {{ customer?.name }}, {{ customer?.gender }} and I am {{ customer?.age }}
-</p>
-
-<input type="text" value="{{ customer?.name }}"/>
-
-<input type="text" [value]="customer?.name" />
-
-<input type="text" [(ngModel)]="customer.name" />
-
-<button (click)="alert(customer.name)">
-  Alert
-</button>
-
-<button (click)="changeGender()" [hidden]="isMale">
-  Male
-</button>
-
-<button (click)="changeGender()"  [hidden]="!isMale">
-  Female
-</button>
+<app-hello-world></app-hello-world>
