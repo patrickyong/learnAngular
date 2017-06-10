@@ -13,9 +13,9 @@ export class AppComponent implements OnInit {
 
   loginCount = 0;
 
-  menuList = [];
-
-  todoList = [];
+  menuList;
+  todoList;
+  currentTodo;
 
   ngOnInit() {
     this.menuList = [
@@ -23,7 +23,10 @@ export class AppComponent implements OnInit {
         { name: 'About', url: '/about'},
         { name: 'Contact', url: '/contact'}
       ];
-    this.todoList = this.todoSvc.getList();
+
+    this.todoSvc.getList().subscribe(list => {
+      this.todoList = list;
+    })
    }
 
   constructor(public todoSvc: TodoService) {
@@ -33,4 +36,34 @@ export class AppComponent implements OnInit {
   login(num: number) {
     this.loginCount = this.loginCount + num;
   }
+
+  addItem(param: string) {
+    this.todoSvc.addItem({desc: param, isCompleted: false})
+    .then(() => {
+      this.currentTodo = '';
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+  }
+
+  completeTask(item: any) {
+    item.isCompleted = true;
+    this.todoSvc.updateItem(item)
+      .then(() => {
+        console.log(item.$key + ' update successful');
+      })
+      .catch(err => console.log(err));
+  }
+
+  deleteTask(item: any) {
+
+    this.todoSvc.deleteItem(item)
+      .then(() => {
+        console.log(item.$key + ' delete successful');
+      })
+      .catch(err => console.log(err));
+  }
+
 }

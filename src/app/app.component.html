@@ -1,10 +1,15 @@
-<h1>Test</h1>
+<h1>Todos</h1>
 
 <!-- show todo list -->
+
+<input type='text' [(ngModel)]="currentTodo">
+<button (click)="addItem(currentTodo)">Add</button>
 <ul>
     <li *ngFor="let item of todoList">
         <span [class.strike]="item.isCompleted">{{ item.desc }}</span>
-        <button *ngIf="!item.isCompleted">Complete</button>
+        <button *ngIf="!item.isCompleted" (click)="completeTask(item)">Complete</button>
+        <button *ngIf="item.isCompleted" (click)="deleteTask(item)">Delete</button>
+        
     </li>
 </ul>
 

@@ -1,14 +1,10 @@
-# HelloWorld
+# Learn Angular 4 with Firebase
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 1.1.1.
-
-## Development server
+### After you download the source code
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
 
-# Notes taken in the class
-
-## Intro to Angular 4.0
+# Notes from the class
 
 ## Intro
 Have to intro what is ES6 and Typescript
@@ -245,7 +241,76 @@ imports: [
     AngularFireModule.initializeApp(config)
   ],
 
+then you have to inject the database service in your service class
+import { AngularFireDatabase } from 'angularfire2/database';
 
+and on the constructor
+constructor(private afDb: AngularFireDatabase) { }
+
+this is how to use the database
+
+  getList()  {
+    return this.afDb.list('/todos');
+  }
+
+  addItem(item: TodoItem) {
+    this.afDb.list('/todos').push(item)
+  }
+
+remember to change the rule in your firebase database
+
+To use Firebase database
+import { AngularFireDatabaseModule } from 'angularfire2/database'
+then at import the module
+imports: [
+    BrowserModule,
+    FormsModule,
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule
+  ],
+
+this.todoList = this.todoSvc.getList(); will not work because its a subscription to the real time DB
+
+please change it to 
+
+this.todoSvc.getList().subscribe(list => {
+      this.todoList = list;
+    })
+
+for the add function you can make it a subscription also
+first make sure you return something from firebase
+return this.afDb.list('/todos').push(item)
+
+then on the app.component.ts
+this.todoSvc.addItem({desc: param, isCompleted: false})
+    .then(() => {
+      this.currentTodo = '';
+    })
+    .catch(err => {
+      console.log(err);
+    });
+
+Because each item from firebase DB as a $key value which is identify the object, we will use type of any for update
+
+At the service class
+updateItem(item: any) {
+    return this.afDb.list('/todos').update(item.$key, item);
+  }
+
+On the component
+completeTask(item: any) {
+    item.isCompleted = true;
+    this.todoSvc.updateItem(item)
+      .then(() => {
+        console.log(item.$key + ' update successful');
+      })
+      .catch(err => console.log(err));
+  }
+
+Finally on the HTML do this 
+<button *ngIf="!item.isCompleted" (click)="completeTask(item)">Complete</button>
+
+Delete function is non trival, similar to update
 
 # Further reading
 

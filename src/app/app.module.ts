@@ -10,6 +10,7 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { TodoService } from './service/todo.service';
 
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireDatabaseModule } from 'angularfire2/database'
 
 const config = {
     apiKey: 'AIzaSyBm1p-ZMzY7t9iaEEXigsszfRl2CxloJpE',
@@ -29,7 +30,8 @@ const config = {
   imports: [
     BrowserModule,
     FormsModule,
-    AngularFireModule.initializeApp(config)
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule
   ],
   providers: [
     TodoService
