@@ -194,7 +194,7 @@ Then update the component
 
 Each component has lifecycle
 ￼
-
+![Alt text](https://angular.io/resources/images/devguide/lifecycle-hooks/hooks-in-sequence.png "Angular Component Lifecycle")
 
 Most common event is ngOnInit
 
@@ -216,13 +216,15 @@ Then you use the service in the ngOnInit
 this.todoList = this.todoSvc.getList();
 
 
-***spec file is testing class
 ***what you export, you can import elsewhere, such as 
 export class TodoService {
 
+### Getting data from Firebase
 
 
 # Further reading
+
+### spec file is testing class
 
 ## Running unit tests
 
