@@ -18,7 +18,7 @@ export class MenuListComponent implements OnInit {
 
   clickLogin() {
     // fire login event
-    this.loginClicked.emit();
+    this.loginClicked.emit(2);
   }
 
   constructor() { }

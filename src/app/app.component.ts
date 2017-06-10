@@ -17,7 +17,7 @@ export class AppComponent {
 
   loginCount = 0;
 
-  login() {
-    this.loginCount++;
+  login(num: number) {
+    this.loginCount = this.loginCount + num;
   }
 }
