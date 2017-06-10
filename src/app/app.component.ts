@@ -6,4 +6,12 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+
+  menulist = [
+    { name: 'Home', url: '/home'},
+    { name: 'About', url: '/about'},
+    { name: 'Contact', url: '/contact'}
+  ];
+
+  title = 'Main Navigation';
 }
