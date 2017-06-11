@@ -1,11 +1,22 @@
 import { Injectable } from '@angular/core';
 
 import { AngularFireDatabase } from 'angularfire2/database';
+import 'rxjs/add/operator/map';
+import { Http } from '@angular/http';
 
 @Injectable()
 export class TodoService {
 
-  constructor(private afDb: AngularFireDatabase) { }
+  constructor(
+    private afDb: AngularFireDatabase,
+    private http: Http) { }
+
+  getJokes() {
+    // call the API
+    const url = 'https://api.icndb.com/jokes/random';
+    return this.http.get(url).map(x => x.json());
+
+  }
 
   getList()  {
     return this.afDb.list('/todos');

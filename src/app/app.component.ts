@@ -16,6 +16,7 @@ export class AppComponent implements OnInit {
   menuList;
   todoList;
   currentTodo;
+  jokeOfTheDay;
 
   ngOnInit() {
     this.menuList = [
@@ -27,6 +28,11 @@ export class AppComponent implements OnInit {
     this.todoSvc.getList().subscribe(list => {
       this.todoList = list;
     })
+
+    this.todoSvc.getJokes().subscribe((response: any) => {
+      this.jokeOfTheDay = response.value.joke;
+      console.log(response.value.joke);
+    });
    }
 
   constructor(public todoSvc: TodoService) {

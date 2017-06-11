@@ -11,7 +11,7 @@ import { TodoService } from './service/todo.service';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
-
+import { HttpModule } from '@angular/http';
 import { UiModule } from './ui/ui.module';
 
 
@@ -36,7 +36,8 @@ const config = {
     AngularFireModule.initializeApp(config),
     AngularFireDatabaseModule,
     ClarityModule.forRoot(),
-    UiModule
+    UiModule,
+    HttpModule
   ],
   providers: [
     TodoService

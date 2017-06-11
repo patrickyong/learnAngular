@@ -1,5 +1,5 @@
 # Learn Angular 4 with Firebase
-Cmd+Shift+V
+
 ### After you download the source code
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
@@ -359,11 +359,52 @@ $ npm install --save-dev clarity-icons clarity-ui clarity-angular  @webcomponent
 In case you don't find any liking for Clarity, there are tones of UI component as highlighted here in Stackoverflow
 https://stackoverflow.com/questions/39395359/angular-2-ui-components-which-library
 
+### Firebase calls via Web Socket 
+All Firebase requests are websocket calles. If you want to look at firebase request on your browser, look for websocket tab.
+
+## HTTP call to REST service
+You are able to use Angular to call any REST API using angular/http module
+Just import them into your service class and instantiate them in your constructor
+
+Then you are able to use the following
+
+```typescript
+return this.http.get(url, options);
+```
+When you got the response from REST API, you have to transform the HTTP response to a JSON object. To do this import the map library from RxJS 
+```typescript
+import 'rxjs/add/operator/map';
+```
+Then change your REST API call
+```typescript
+return this.http.get(url).map(x => x.json());
+```
+To display this 
+```typescript
+this.jokeOfTheDay = response.value.joke;
+```
+
+### How map works and it encourages functional programming concept
+For example,
+```typescript
+var arr = [1,2,3];
+
+var newArr = arr.map(x => {
+  return x + 1;
+})
+
+```
+
+## Pipe
+
+
 # Further reading
 
 
 learn about subscribe using pipe such as 'let item of (todo$ | async)'
 
+### Import in Angular
+Remember do not import everything because the result JS will be bigger
 
 ### spec file is testing class
 
@@ -383,3 +424,6 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+Cmd+Shift+V
