@@ -1,6 +1,24 @@
 <app-layout>
+    <div>
+        <pre>{{ user | json }}</pre>
+    <button (click)="loginWithGoogle()">Login with Google</button>
+    <button (click)="loginWithFacebook()">Login with Facebook</button>
+    
+    <button (click)="logout()">Logout</button>
+    </div>
+    <div>
+        <input type='text' [(ngModel)]="signInEmail"/>
+        <input type='password' [(ngModel)]="signInPassword"/>
+        <button (click)="loginWithEmail(signInEmail, signInPassword)">Login with Email</button>
+        <button (click)="signupUser(signInEmail, signInPassword)">Sign up with Email</button>
+    </div>
+
+
   <h1>{{title}}</h1>
   <input type='text' [(ngModel)]="currentTodo">
+
+    
+
     <button (click)="addItem(currentTodo)">Add</button>
     <ul>
         <li *ngFor="let item of todoList">
@@ -14,7 +32,9 @@
     <app-hello-world></app-hello-world>
 
     <p><b>Press count</b>: {{ loginCount }}</p>
-    <p><b>Joke of the day</b>: {{ jokeOfTheDay }}</p>
+    <p><b>Joke of the day</b>: {{ jokeOfTheDay  | uppercase }}</p>
+    <p> {{ 'Chris, 23' | nameAge }} </p>
+    <p> {{ 'Sam! 33' | nameAge:'!' }} </p>
 </app-layout>
 <!-- show todo list -->
 

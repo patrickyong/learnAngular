@@ -396,14 +396,157 @@ var newArr = arr.map(x => {
 ```
 
 ## Pipe
+Pipe is known as Filter back in Angular JS 1.0
+There are existing pipes in Angular library, for example
+```
+<p><b>Joke of the day</b>: {{ jokeOfTheDay  | uppercase }}</p>
+```
+Another useful Pipe is JsonPipe
+```html
+<pre>
+  {{ jsonResponse | json }}
+</pre>
+```
+Let's create our own pipe, say we have a data structure like this
+```javascript
+'Chris', 12
+'Patrick', 30
+```
+And we want to always display it as ~name~ is ~age~ years old. This is a scenario we can use a pipe to do it.
+
+To creae a new pipe, at the console type
+```bash
+ng g p NameAge
+```
+it will create name-age.pipe.ts and name-age.pipe.spec.ts
+
+Inside the Transform method do this
+```typescript
+  transform(value: any, args?: any): any {
+
+    if (!value) {
+      return value;
+    }
+
+    const result: string[] = value.split(',');
 
 
+    if (result.length > 1) {
+      return `{result[0]} is ${result[1]} years old `;
+    } else {
+      return value;
+    }
+  }
+```
+
+to use your pipe, at the html
+```html
+<p> {{ 'Chris, 23' | nameAge }} </p>
+```
+
+If you want to have additional parameter to the pipe, you can add it on the Transform method by changing 
+``` typescript
+const separator = args || ',';
+    
+const result: string[] = value.split(separator);
+
+```
+
+Then on the HTML
+```html
+<p> {{ 'Sam! 33' | nameAge:'!' }} </p>
+```
+
+### Firebase authentication
+
+
+app.module.ts
+```typescript
+import { AngularFireAuthModule } from 'angularfire2/auth';
+```
+
+
+```typescript
+imports: [
+    BrowserModule,
+    FormsModule,
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule,
+    ClarityModule.forRoot(),
+    UiModule,
+    HttpModule,
+    AngularFireAuthModule
+  ],
+```
+
+
+app.component.ts
+
+
+```typescript
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+```
+
+
+```typescript
+constructor(
+    private afAuth: AngularFireAuth,
+    public todoSvc: TodoService)
+```
+
+Add this method
+```typescript
+loginWithGoogle() {
+    this.afAuth.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+```
+add this to ngOnInit()
+```typescript
+
+    this.afAuth.authState.subscribe(user => {
+      this.user = user;
+      console.log(this.user);
+    });
+```
+Now add a button to allow login with Google
+```html
+    <div>
+        <pre>{{ user | json }}</pre>
+        <button (click)="loginWithGoogle()">Login with Google</button>
+    </div>
+```
+
+Do the same for Facebook
+```typescript
+
+  loginWithFacebook() {
+    this.afAuth.auth
+      .signInWithPopup(new firebase.auth.FacebookAuthProvider());
+  }
+```
+Sign in using email is slightly different because you have to provide an interface for user to:
+1. Sign up as new User
+2. Reset password
+3. Sign in
+
+Please refer to the following blog post for detail steps
+https://javebratt.com/angularfire2-authentication-ionic/
+
+
+And you need the logout logic
+```typescript
+ logout() {
+    this.afAuth.auth.signOut();
+  }
+```
 # Further reading
 
 
 learn about subscribe using pipe such as 'let item of (todo$ | async)'
 
-### Import in Angular
+### Note about import in Angular
 Remember do not import everything because the result JS will be bigger
 
 ### spec file is testing class

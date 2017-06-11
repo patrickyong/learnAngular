@@ -2,12 +2,20 @@ import { Component, OnInit } from '@angular/core';
 
 import { TodoService } from './service/todo.service';
 
+import { NameAgePipe } from './name-age.pipe';
+
+import { AngularFireAuth } from 'angularfire2/auth';
+import * as firebase from 'firebase/app';
+
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
 export class AppComponent implements OnInit {
+
+
 
   title = 'Todos';
 
@@ -17,8 +25,17 @@ export class AppComponent implements OnInit {
   todoList;
   currentTodo;
   jokeOfTheDay;
+  user;
+  signInEmail;
+  signInPassword;
 
   ngOnInit() {
+
+    this.afAuth.authState.subscribe(user => {
+      this.user = user;
+      console.log(this.user);
+    });
+
     this.menuList = [
         { name: 'Home', url: '/home'},
         { name: 'About', url: '/about'},
@@ -35,8 +52,33 @@ export class AppComponent implements OnInit {
     });
    }
 
-  constructor(public todoSvc: TodoService) {
+  constructor(
+    private afAuth: AngularFireAuth,
+    public todoSvc: TodoService) {
 
+  }
+
+  loginWithGoogle() {
+    this.afAuth.auth
+      .signInWithPopup(new firebase.auth.GoogleAuthProvider());
+  }
+
+  loginWithFacebook() {
+    this.afAuth.auth
+      .signInWithPopup(new firebase.auth.FacebookAuthProvider());
+  }
+
+  signupUser(newEmail: string, newPassword: string): firebase.Promise<any> {
+    return this.afAuth.auth.createUserWithEmailAndPassword(newEmail, newPassword);
+  }
+
+  loginWithEmail(newEmail: string, newPassword: string) {
+    this.afAuth.auth
+      .signInWithEmailAndPassword(newEmail, newPassword);
+  }
+
+  logout() {
+    this.afAuth.auth.signOut();
   }
 
   login(num: number) {

@@ -10,9 +10,11 @@ import { MenuListComponent } from './menu-list/menu-list.component';
 import { TodoService } from './service/todo.service';
 
 import { AngularFireModule } from 'angularfire2';
+import { AngularFireAuthModule } from 'angularfire2/auth';
 import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { HttpModule } from '@angular/http';
 import { UiModule } from './ui/ui.module';
+import { NameAgePipe } from './name-age.pipe';
 
 
 const config = {
@@ -28,7 +30,8 @@ const config = {
   declarations: [
     AppComponent,
     HelloWorldComponent,
-    MenuListComponent
+    MenuListComponent,
+    NameAgePipe
   ],
   imports: [
     BrowserModule,
@@ -37,7 +40,8 @@ const config = {
     AngularFireDatabaseModule,
     ClarityModule.forRoot(),
     UiModule,
-    HttpModule
+    HttpModule,
+    AngularFireAuthModule
   ],
   providers: [
     TodoService
