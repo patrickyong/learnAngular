@@ -566,7 +566,7 @@ And you need the logout logic
     this.afAuth.auth.signOut();
   }
 ```
-##Routing
+## Routing
 There is no routing command for NG. You can also use --routing option when you create the project
 
 But if you missed out that, you have to create a routing file in the app folder
@@ -660,7 +660,7 @@ This is how you construct the links
 Check out more here
 https://angular-2-training-book.rangle.io/handout/routing/routeparams.html
 
-# Directive
+## Directive
 Use this command to create a highlight Directive
 ``` bash
 ng g d highlight
@@ -692,14 +692,19 @@ means both must be in the tag only works
 ```
 To learn about directive go to https://github.com/angular/angular/
 
-# Form
+## Form
 
-## Reactive Form
+### Template Form
+
+### Reactive Form
 Inport ReactiveFormsModule into app.module
 
 Read more here https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
 
-#Firebase Cloud Storage
+## Firebase Cloud Storage
+Firebase provides cloud storage
+
+Let's create a file component
 ```html
 <form enctype="multipart/form-data">
   <input type="file" name="photo" (change)="upload($event.target.name, $event.target.files)" accept="image/*"/>
@@ -736,8 +741,15 @@ imageref.put(filelist[index]);
 
 }
 ```
+## Firebase Functions
+There are times you dont want to expose your business logic on the client browser, so Firebase provided the ability for developers to write custom functions that works as 
+1. REST API
+2. Event triggers
+
+To create Firebase function you need to add the service to your project
 
 
+### REST API with Firebase Functions
 
 
 # Further reading
