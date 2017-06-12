@@ -483,7 +483,12 @@ Then on the HTML
 ```
 
 ### Firebase authentication
-
+Firebase provides OAuth 2.0 Authentication for developers so they can skip the whole process of creating your own OAuth token service. The following authentication providers are available
+1. Google
+2. Facebook
+3. Twitter
+4. Github
+5. Custom email 
 
 app.module.ts
 ```typescript
