@@ -11,7 +11,7 @@ export class NameAgePipe implements PipeTransform {
       return value;
     }
     const separator = args || ',';
-    
+
     const result: string[] = value.split(separator);
 
 

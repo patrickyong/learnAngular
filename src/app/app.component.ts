@@ -6,7 +6,7 @@ import { NameAgePipe } from './name-age.pipe';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
-
+import { Routes, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',

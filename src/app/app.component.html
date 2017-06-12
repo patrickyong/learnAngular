@@ -1,4 +1,5 @@
 <app-layout>
+    <router-outlet></router-outlet>
     <div>
         <pre>{{ user | json }}</pre>
     <button (click)="loginWithGoogle()">Login with Google</button>
@@ -32,9 +33,11 @@
     <app-hello-world></app-hello-world>
 
     <p><b>Press count</b>: {{ loginCount }}</p>
-    <p><b>Joke of the day</b>: {{ jokeOfTheDay  | uppercase }}</p>
+    <p><b>Joke of the day</b>: <span appHighlight="lightgreen">{{ jokeOfTheDay  | uppercase }}</span></p>
     <p> {{ 'Chris, 23' | nameAge }} </p>
     <p> {{ 'Sam! 33' | nameAge:'!' }} </p>
+    
+    
 </app-layout>
 <!-- show todo list -->
 

@@ -15,7 +15,16 @@ import { AngularFireDatabaseModule } from 'angularfire2/database'
 import { HttpModule } from '@angular/http';
 import { UiModule } from './ui/ui.module';
 import { NameAgePipe } from './name-age.pipe';
+import { HomePageComponent } from './home-page/home-page.component';
+import { CustomerPageComponent } from './customer-page/customer-page.component';
 
+import { AppRoutingModule } from './app-routing-module';
+
+import {  } from '@angular/route';
+import { HighlightDirective } from './highlight.directive';
+import { LoginPageComponent } from './login-page/login-page.component';
+import { SettingPageComponent } from './setting-page/setting-page.component';
+import { TodoPageComponent } from './todo-page/todo-page.component';
 
 const config = {
     apiKey: 'AIzaSyBm1p-ZMzY7t9iaEEXigsszfRl2CxloJpE',
@@ -31,7 +40,13 @@ const config = {
     AppComponent,
     HelloWorldComponent,
     MenuListComponent,
-    NameAgePipe
+    NameAgePipe,
+    HomePageComponent,
+    CustomerPageComponent,
+    HighlightDirective,
+    LoginPageComponent,
+    SettingPageComponent,
+    TodoPageComponent
   ],
   imports: [
     BrowserModule,
@@ -41,7 +56,8 @@ const config = {
     ClarityModule.forRoot(),
     UiModule,
     HttpModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    AppRoutingModule
   ],
   providers: [
     TodoService

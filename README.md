@@ -6,9 +6,34 @@ Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app w
 
 # Notes from the class
 
-## Intro
-Have to intro what is ES6 and Typescript
-Compare ES5, ES6 and Typescript
+# Intro
+## What is Angular
+Angular is a Javascript framework for building database driven Single Page Application. It simplifies data binding and provides a structure to build complex Web application. If you have to write a very responsive web application that deals with a lot of database tables (SQL and NoSQL alike), then Angular is a good choice. 
+
+There are tonnes of Javascript frameworks out there such as React, Vue, Ember but Angular is unique and gained wide adoption because:-
+1. It is created and maintained by a team in Google.
+2. Adoption among peers in the industry including Microsoft, Teradata, VMWare, Telerik and many others whom had building web based products on Angular.
+3. It's a very complete framework with features such as Dependency Injection, two way databinding, tones extensions to HTML attributes via Directives to enhance your UX quickly, and many services built into the framework to handle things like call to REST API services and accessibility
+4. Tones of IDE and tooling support including VS Code, Jetbrains Webstorm, Visual Studio, Eclipse... 
+5. Adoption of standards such as Typescript and RsJS means to certain developers they don't have to relearn certain technologies just to pick Angular
+
+You should certain read up more about Angular form its office documentation here
+https://angular.io/docs/
+
+
+### Style Guide
+There is a style guide published by the Angular team here
+https://angular.io/docs/ts/latest/guide/style-guide.html
+
+But I recommend you to install TSLint to enforce good naming convention so others in your team will find it easier to read your code.
+
+
+# ES6 and Typescript
+Angular has build in support for TypeScript which is actually a superset of JavaScript; its initial purpose is to provide strongly type support in JavaScript based applications so it becomes easier to write large enterprise class JavaScript applications. TypeScript is developed and maintained by Microsoft and has its very own website at https://www.typescriptlang.org. Its core developer Anders Hejlsberg is famous for creating the Turbo Pascal & Delphi IDE and subsequently the C# language in Microsoft.  
+
+## Comparing ES5, ES6 and Typescript
+
+JavaScript is also know as ECMAScript (hence the name ES) 
 
 Let’s create a new angular, in your bash shell type
 ng new hello-world
@@ -541,8 +566,188 @@ And you need the logout logic
     this.afAuth.auth.signOut();
   }
 ```
+##Routing
+There is no routing command for NG. You can also use --routing option when you create the project
+
+But if you missed out that, you have to create a routing file in the app folder
+Create a file named app-routing-module.ts
+
+Use the snippet a-modulerouting if you have Angular 4 snippet installed
+
+Then change 
+
+```js
+imports: [RouterModule.forChild(routes)],
+```
+To 
+```js
+imports: [RouterModule.forRoot(routes)],
+```
+Because we want the routing at the Root level. 
+
+After that you define your routes here
+
+```js
+const routes: Routes = [
+  { path: 'path', component: NameComponent },
+];
+```
+Then create two components home-page and customer-page. After that import them into app-touring-module.ts
+```js
+
+import { HomePageComponent } from './home-page/home-page.component';
+import { CustomerPageComponent } from './customer-page/customer-page.component';
+```
+
+modify your routing
+```js
+
+const routes: Routes = [
+  { path: 'home', component: HomePageComponent },
+  { path: 'customer', component: CustomerPageComponent }
+];
+```
+Remove
+```js
+export const routedComponents = [NameComponent];
+```
+
+After that rename
+```js
+export class NameRoutingModule { }
+```
+to 
+```js
+export class AppRoutingModule { }
+```
+Back to app.module.ts
+```js
+import { AppRoutingModule } from './app-routing-module';
+```
+
+Then import 
+```js
+imports: [
+    BrowserModule,
+    FormsModule,
+    AngularFireModule.initializeApp(config),
+    AngularFireDatabaseModule,
+    ClarityModule.forRoot(),
+    UiModule,
+    HttpModule,
+    AngularFireAuthModule,
+    AppRoutingModule
+  ],
+```
+Add this path into your app-routing-module.ts [Read out about pathMatch]
+```ts
+{ path: '', redirectTo: '/home', pathMatch: 'prefix' }
+```
+Go to app.component.html
+```html
+<router-outlet></router-outlet>
+```
+
+This is how you construct the links
+```html
+<ul class="nav-list">
+    <li><a routerLink="/home" class="nav-link">Home</a></li>
+    <li><a routerLink="/customer/Chris" class="nav-link">Customers</a></li>
+    <li><a [routerLink]="['/customer', 'patrick']" [queryParams]="{nickName: 'patrick', age: '23'}" class="nav-link">Patrick</a></li>
+</ul>
+```
+
+Check out more here
+https://angular-2-training-book.rangle.io/handout/routing/routeparams.html
+
+# Directive
+Use this command to create a highlight Directive
+``` bash
+ng g d highlight
+```
+
+modify the import
+import { Directive, ElementRef } from '@angular/core';
+
+modify the constructor
+constructor(el: ElementRef) {
+    el.nativeElement.style.backgroundColor = 'Yellow';
+   }
+
+## power of Selector
+For component this like this in html
+```html
+<app-home-page>
+```
+for Directive its a html attribute
+```html
+<a appHighlight>
+```
+You can also have selector: '.highlight'
+which means for class highlight
+When you have selector: '[a1][a2]'
+means both must be in the tag only works
+```html
+<a a1 a2>
+```
+To learn about directive go to https://github.com/angular/angular/
+
+# Form
+
+## Reactive Form
+Inport ReactiveFormsModule into app.module
+
+Read more here https://scotch.io/tutorials/using-angular-2s-model-driven-forms-with-formgroup-and-formcontrol
+
+#Firebase Cloud Storage
+```html
+<form enctype="multipart/form-data">
+  <input type="file" name="photo" (change)="upload($event.target.name, $event.target.files)" accept="image/*"/>
+  <ul>
+    <li *ngFor="let url of images">
+      <img [src]="url" />
+    </li>
+  </ul>
+</form>
+```
+at the backend
+```ts
+import FirebaseApp from angularfire2
+import AngularFireModule from angularfire2
+import 'firebase/storage';
+
+upload(fieldName, fileList: FileList) {
+  const storageRef = this.afApp.storage().ref();
+
+  Object.keys(fileLIst).foreach(index => {
+    const imageRef=sotrageRef.child(`images/${fileLIst[index].name}`)
+imageref.put(filelist[index]);
+.then(x=> {
+  console.log(x, x.downlaodURL);
+  //this.images.push(x.downloadUrl);
+  //this.images = this.images.concat(x.downloadURL);
+  this.images = [...this.images, x.downloadURL];
+})
+.catch(x=>console.log(x));
+    
+
+
+  })
+
+}
+```
+
+
+
+
 # Further reading
 
+learn up about take in RsJS, so you take x times and it will auto unsubcribe for you
+```ts
+this.sub = this.route.params.take(1).subscribe((params: CustomerPageParam) => {
+       this.name = params.name; // (+) converts string 'id' to a number
+    });
+```
 
 learn about subscribe using pipe such as 'let item of (todo$ | async)'
 
@@ -567,6 +772,11 @@ Before running the tests make sure you are serving the app via `ng serve`.
 ## Further help
 
 To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+
+
+# Login and Authentication
+http://jasonwatmore.com/post/2016/09/29/angular-2-user-registration-and-login-example-tutorial
+
 
 
 Cmd+Shift+V
